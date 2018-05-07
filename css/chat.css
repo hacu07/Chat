@@ -19,6 +19,12 @@
 	--bd-Facturado:#fff;
 }
 
+body{
+	width: 80vh;
+	height: 100vh;
+	margin: auto;
+}
+
 #cont_principal{
 	background-color: #FFF;
 	height: 100vh;
@@ -69,3 +75,51 @@
 	margin-right: 20%;
 }
 
+#cont_principal_chat{
+	width: 60%;
+	height: 80%;
+	margin: 10% auto auto auto;
+	/*padding-top: 10%;*/
+	background-color: #1976D2;
+}
+
+#cont_mensajes{
+	width: 90%;
+	height: 70%;
+	margin: 10% auto auto auto;
+	background-color: #fff;
+	overflow: scroll;
+}
+
+#cont_sur{
+	width: 90%;
+
+	height: 20%;
+	margin: 10% auto auto auto;
+}
+
+#mensaje{
+	width: 60%;
+	margin-right: 5%;
+}
+
+#btnEnviar{
+	width: 35%;
+	/*margin-right: 5%;*/
+	background-color: #BBDEFB;
+	color: #1976D2;
+}
+
+#lineaMensaje{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	background-color: #BBDEFB;
+	color: #2196F3;
+
+}
+
+#lineaMensaje h4{
+	width: 100%;
+	height: 10%;
+}
