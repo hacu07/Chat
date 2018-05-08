@@ -5,6 +5,8 @@
 	* Parametros: datos: arreglo de parametroscon los datos, 
 	* llama la funcion leerDatos() para tratar la respuesta
 	********************************************************************/
+var UsuarioGlobal = '';
+
 function ejecutarAjaxJson(datos, opc){
 	$.ajax({                                      
 		type: 'post',
@@ -27,11 +29,28 @@ function leerDatos(responseJSON, opc){
 	var response = JSON.parse(responseJSON);
 	switch(opc){
 		case 1:
-			if(response['mensaje'] == 'ok'){
-				alert("mensaje enviado");
+			if(response[0]['EXISTE'] == 0){
+				alert("contraseña enviada al correo");
+			}else{
+				alert("Usuario Ya Existe");
+			}
+		break;
+		case 2:
+			if(response[0]['EXISTE'] == '1'){
+				mostrarInterfazChat();
+			}else{
+				alert("No se encuentra registrado");
 			}
 		break;
 	}
+}
+
+function getUsuario(){
+	return UsuarioGlobal;
+}
+
+function setUsuario(nombreUsuario){
+	UsuarioGlobal = nombreUsuario;
 }
 
 function mostrarInterfazLogin(){
@@ -41,11 +60,10 @@ function mostrarInterfazLogin(){
 			'<input id="inUsuario" class="btn btn-block" type="text" placeholder="Usuario"></input>'+
 			'<h3>Contraseña</h3>'+
 			'<input id="inPassword" class="btn btn-block" type="password" placeholder="Usuario"></input>'+
-			'<button id="btnIngresar" class="btn btn-primary" onclick="mostrarInterfazChat()">Ingresar</button>'+
+			'<button id="btnIngresar" class="btn btn-primary" onclick="validarUsuario()">Ingresar</button>'+
 			'<button id="btnRegistrarme" class="btn btn-primary" onclick="mostrarInterfazRegistro()">Registrarme</button>'+
 			'</div>';
 	$('#cont_trabajo').html(login);
-
 }
 
 function mostrarInterfazRegistro(){
@@ -66,8 +84,23 @@ function mostrarInterfazChat(){
 }
 
 function agregarMensaje(){
-	var mensaje = '<div id="lineaMensaje"><h4>Usuario</h4><h4>Prueba mensaje</h4></div>';
+	var texto = $('#mensaje').val();//obtiene el mensaje de la caja de texto
+	var mensaje = '<div id="lineaMensaje"><h4>'+getUsuario()+'</h4><h4>'+texto+'</h4></div>';
 	$('#cont_mensajes').append(mensaje);
+	registrarMensaje(getUsuario(),texto);
+}
+
+function registrarMensaje(usuario, texto){
+	var parametros = {"opc" : 3, "usuario" : usuario, "texto" : texto};
+	ejecutarAjaxJson(parametros, 3);
+}
+
+function validarUsuario(){
+	var usuario = $('#inUsuario').val();
+	var password = $('#inPassword').val();
+	setUsuario(usuario);
+	var parametros = {"opc" : 2, "usuario" : usuario, "password" : password};
+	ejecutarAjaxJson(parametros,2);
 }
 
 
