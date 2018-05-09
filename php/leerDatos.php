@@ -22,6 +22,10 @@ switch ($opcion) {
 		$sql = "INSERT INTO  mensaje(idUsuario,mensaje) values ( (SELECT idUsuario from usuario where nombreUsuario like '{$usuario}'), '{$texto}' )";
 		actualizarRegistro($sql);
 	break;
+	case 4:
+		$sql = "SELECT usuario.nombreUsuario, mensaje.mensaje FROM mensaje JOIN usuario ON mensaje.idUsuario = usuario.idUsuario";
+		leerRegistro($sql);
+	break;
 
 }
 

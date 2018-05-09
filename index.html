@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/chat.css">
 </head>
-<body>
+<body onload="setInterval('actualizarChat()',4000)">
 	<div id="cont_principal" class="container" >
 		<div id="cont_trabajo">
 			<h1>CHAT ADSI</h1>
@@ -15,7 +15,7 @@
 			<input id="inUsuario" class="btn btn-block" type="text" placeholder="Usuario"></input>
 			<h3>Contraseña</h3>
 			<input id="inPassword" class="btn btn-block" type="password" placeholder="Usuario"></input>
-			<button id="btnIngresar" class="btn btn-primary">Ingresar</button>
+			<button id="btnIngresar" class="btn btn-primary" onclick="validarUsuario()">Ingresar</button>
 			<button id="btnRegistrarme" class="btn btn-primary" onclick="mostrarInterfazRegistro()">Registrarme</button>
 		</div>
 		

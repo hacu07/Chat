@@ -42,6 +42,11 @@ function leerDatos(responseJSON, opc){
 				alert("No se encuentra registrado");
 			}
 		break;
+		case 4:
+			if (response.length > 0) {
+				cargarMensajesGUI(response);
+			}
+		break;
 	}
 }
 
@@ -85,28 +90,58 @@ function mostrarInterfazChat(){
 
 function agregarMensaje(){
 	var texto = $('#mensaje').val();//obtiene el mensaje de la caja de texto
-	var mensaje = '<div id="lineaMensaje"><h4>'+getUsuario()+'</h4><h4>'+texto+'</h4></div>';
-	$('#cont_mensajes').append(mensaje);
-	registrarMensaje(getUsuario(),texto);
+	if(texto != ''){
+		var mensaje = '<div id="lineaMensaje"><h4>'+getUsuario()+'</h4><h3>'+texto+'</h3></div>';
+		$('#cont_mensajes').append(mensaje);
+		$('#mensaje').val('');
+		registrarMensaje(getUsuario(),texto);
+	}else{
+		alert("Escriba un mensaje");
+	}
+	
 }
+
 
 function registrarMensaje(usuario, texto){
 	var parametros = {"opc" : 3, "usuario" : usuario, "texto" : texto};
 	ejecutarAjaxJson(parametros, 3);
 }
 
+function actualizarChat(){
+	var parametros = {"opc" : 4};
+	ejecutarAjaxJson(parametros,4);
+}
+
 function validarUsuario(){
 	var usuario = $('#inUsuario').val();
 	var password = $('#inPassword').val();
-	setUsuario(usuario);
-	var parametros = {"opc" : 2, "usuario" : usuario, "password" : password};
-	ejecutarAjaxJson(parametros,2);
+	if(usuario != '' && password != ''){
+		setUsuario(usuario);
+		var parametros = {"opc" : 2, "usuario" : usuario, "password" : password};
+		ejecutarAjaxJson(parametros,2);
+	}else{
+		alert("Faltan campos por llenar");
+	}
+	
 }
 
 
 function registrarUsuario(){
 	var usuario = $('#regUsuario').val();
 	var correo = $('#regCorreo').val();
-	var parametros = {"opc" : 1, "usuario" : usuario, "correo" : correo};
-	ejecutarAjaxJson(parametros,1);
+	if (usuario != '' && correo != '') {
+		var parametros = {"opc" : 1, "usuario" : usuario, "correo" : correo};
+		ejecutarAjaxJson(parametros,1);
+	}else{
+		alert("Faltan campos por llenar");
+	}
+	
+}
+
+function cargarMensajesGUI(response){
+	$('#cont_mensajes').html('');//Limpiamos la caja de mensaje para que no se agreguen en la nueva carga
+	for (var i = 0; i < response.length; i++) {
+		var mensaje = '<div id="lineaMensaje"><h4>'+response[i]["nombreUsuario"]+'</h4><h3>'+response[i]["mensaje"]+'</h3></div>';
+		$('#cont_mensajes').append(mensaje);
+	}
 }
